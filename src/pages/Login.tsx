@@ -35,9 +35,22 @@ export const Login = () => {
                     <div className='button bg-green p-3 mt-5 text-white font-raleway rounded-lg text-sm flex items-center font-semibold justify-center'>
                         Sign Up
                     </div>
+
+                    <div className='flex items-center w-full text-center mt-5'>
+                        <div className="flex-1 border-t border-gray-subtext"></div>
+                        <span className="px-3 text-gray-subtext whitespace-nowrap text-xs font-raleway font-medium">
+                            Instant Login
+                        </span>
+                        <div className="flex-1 border-t border-gray-subtext"></div>
+                    </div>
+
+
                 </div>
+                
                
             </div>
+
+            
         </div>
 
         {/* Right */}
