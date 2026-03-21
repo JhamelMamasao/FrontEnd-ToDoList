@@ -1,13 +1,14 @@
-import {  } from 'react'
 import logo1 from '../assets/logo.svg'
+import google from '../assets/Google.svg'
+import facebook from '../assets/Facebook.svg'
 
 export const Login = () => {
   return (
     <div className='flex h-screen'>
         {/* Left */}
-        <div className='w-1/2 flex'>
+        <div className='w-1/2 flex relative'>
             <div className='flex items-baseline p-8'>
-                    <img src={logo1} alt="" className='w-35' />
+                    <img src={logo1} alt="logo" className='w-35' />
             </div>
             <div className='flex justify-center items-center flex-col'>
                 <div className='flex justify-baseline flex-col'>
@@ -26,9 +27,9 @@ export const Login = () => {
                     <div className='flex flex-row justify-between mt-2'>
                         <div className='flex flex-row justify-center items-center gap-2'>
                             <input type='checkbox'/>
-                            <p className='font-raleway font-medium text-gray-text text-xs'>Remember Me</p>
+                            <p className='font-raleway font-semibold text-gray-text text-xs'>Remember Me</p>
                         </div>
-                        <p className='font-raleway font-medium text-gray-text text-xs'>Forgot your password?</p>
+                        <p className='font-raleway font-semibold text-gray-text text-xs'>Forgot your password?</p>
                     </div>
 
                     {/* Button */}
@@ -44,6 +45,23 @@ export const Login = () => {
                         <div className="flex-1 border-t border-gray-subtext"></div>
                     </div>
 
+                    {/* instant login */}
+                    <div className='flex flex-row items-center justify-center mt-5 gap-15 '>
+                        <div className='flex flex-row items-center gap-3'>
+                            <img src={facebook} alt='google'/>
+                            <p className='text-sm font-raleway font-medium text-gray-subtext'>Continue with Facebook</p>
+                        </div>
+                        <div className='flex flex-row items-center gap-3'>
+                            <img src={google} alt='google'/>
+                            <p className='text-sm font-raleway font-medium text-gray-subtext'>Continue with Google</p>
+                        </div>
+                    </div>
+
+                    {/* Sign Up */}
+                    <div className='flex items-center justify-center mt-7'>
+                        <p className='font-raleway font-medium text-sm text-gray-subtext'>Don’t have any Account? <span className='font-bold text-sm text-green'>Register</span></p>
+                    </div>
+
 
                 </div>
                 
@@ -51,6 +69,9 @@ export const Login = () => {
             </div>
 
             
+            <footer className='absolute bottom-6 left-0 right-25 text-center'>
+                <p className='font-raleway text-xs text-gray-subtext'>Terms and conditions | Privacy policy</p>
+            </footer>
         </div>
 
         {/* Right */}
