@@ -43,7 +43,7 @@ export function NavMain({
             <SidebarMenuItem>
                 <SidebarMenuButton >
                   {item.icon && <item.icon />}
-                  <span className="text-sm">{item.title}</span>
+                  <span>{item.title}</span>
                 </SidebarMenuButton>
             </SidebarMenuItem>
           </Collapsible>

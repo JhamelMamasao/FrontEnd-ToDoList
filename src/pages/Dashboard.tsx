@@ -21,7 +21,7 @@ export const Dashboard = () => {
                     <Breadcrumb>
                       <BreadcrumbList>
                         <BreadcrumbItem className="hidden md:block">
-                          <BreadcrumbLink className="font-raleway">
+                          <BreadcrumbLink>
                               Dashboard
                           </BreadcrumbLink>
                         </BreadcrumbItem>

@@ -1,76 +1,34 @@
-import logo1 from '../assets/logo.svg'
-import google from '../assets/GoogleIcon.svg'
-import { useNavigate } from 'react-router-dom'
-import pic from '../assets/try.jpg' 
 
-export const Login = () => {
-    const navigate = useNavigate()
+import logo from '../assets/Logoonly.svg'
+import { LoginForm } from '../components/login-form'
 
 
-  return (
-    <div className='flex h-screen'>
-        {/* Left */}
-        <div className='w-1/2 flex relative justify-center items-center'>
-            <div className='absolute top-0 left-0 p-8'>
-                    <img src={logo1} alt="logo" className='w-35' />
+export function Login({ className, ...props}: React.ComponentProps<"div">) {
+
+    return (
+    <div className='grid min-h-svh lg:grid-cols-2 bg-white'>
+        <div className='flex flex-col gap-2 p-6 md:p-10'>
+            <div className='flex justify-center gap-2 md:justify-start'>
+                <a href='#' className="flex items-center gap-2 font-medium">
+                      <div className="flex w-8 h-8 md:w-10 md:h-10 items-center justify-center rounded-md bg-green text-primary-foreground">
+                            <img src={logo} className='w-3 h-3 md:w-4 md:h-4'/>
+                    </div>
+                     <p className="font-bold">
+                        Higos<span className=" font-medium ">Kayan</span>
+                    </p>
+                </a>
             </div>
-                <div className='flex flex-col w-full max-w-md'>
-                    <h1 className='font-raleway font-bold text-2xl text-left text-gray-text' >Welcome Back!</h1>
-                    <h1 className='font-raleway font-medium text-sm text-gray-subtext'>We Are Happy To See You Again</h1>
-                     <div className='input-group flex justify-base mt-5'>
-                        <label>Email Address</label>
-                        <input type="email" className='font-raleway font-medium text-base'></input>
-                    </div>
-                    <div className='input-group flex justify-base mt-5'>
-                        <label>Password</label>
-                        <input type="password" className='font-raleway font-medium text-base'></input>
-                    </div>
-
-                    {/* Remember and  Forgot password*/}
-                    <div className='flex flex-row justify-between mt-2'>
-                        <div className='flex flex-row justify-center items-center gap-2'>
-                            <input type='checkbox'/>
-                            <p className='font-raleway font-semibold text-gray-text text-xs'>Remember Me</p>
-                        </div>
-                        <p className='font-raleway font-semibold text-gray-text text-xs'>Forgot your password?</p>
-                    </div>
-
-                    {/* Button */}
-                    <div className='button bg-green p-3 mt-5 text-white font-raleway rounded-lg text-sm flex items-center font-semibold justify-center'>
-                        Sign Up
-                    </div>
-
-                     <div className='flex items-center w-full text-center mt-5'>
-                        <div className="flex-1 border-t border-gray-subtext"></div>
-                        <span className="px-3  whitespace-nowrap text-xs font-raleway font-medium">
-                           or
-                        </span>
-                        <div className="flex-1 border-t border-gray-subtext"></div>
-                    </div>
-
-                    {/* instant login */}
-                    <div className='flex flex-row items-center justify-center mt-5 gap-15 '>
-                         <div className='w-full bg-transparent p-3 rounded-lg border border-[#a4a4a4] flex items-center justify-center flex-row gap-3 '>
-                                <img src={google} />
-                                <p className='font-medium text-gray-subtext text-sm'>Sign in with Google</p>
-                         </div>
-                    </div>
-
-                     {/* Sign Up */}
-                    <div className='flex items-center justify-center mt-7'>
-                        <p className='font-raleway font-medium text-sm text-gray-subtext'>Don’t have any Account? <span onClick={() => navigate('/register')} className='font-bold text-sm text-green'>Register</span></p>
-                    </div>
+           <div className='flex flex-1 lg:pr-40 items-center justify-center'>
+                <div className='w-full max-w-xs'>
+                    <LoginForm />
                 </div>
-
-            <footer className='absolute bottom-6 left-0 right-0 text-center'>
-                <p className='font-raleway text-xs text-gray-subtext'>Terms and conditions | Privacy policy</p>
-            </footer>
+            </div>
         </div>
-
-        {/* Right */}
-        <div className='hidden md:w-1/2 bg-green md:flex items-end justify-end p-8 text-white '>
-               <h1 className='font-bold text-lg font-raleway'>Higos<span className='font-medium'>Kayan</span></h1>
-        </div>
+        <div className="relative hidden bg-green lg:block">
+        
+      </div>
     </div>
   )
 }
+    
+
