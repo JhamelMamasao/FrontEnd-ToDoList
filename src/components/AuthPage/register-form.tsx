@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom"
-import { cn } from "../lib/utils"
-import { Button } from "./ui/button"
-import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSeparator } from "./ui/field"
-import { Input } from "./ui/input"
+import { cn } from "../../lib/utils"
+import { Button } from "../ui/button"
+import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSeparator } from "../ui/field"
+import { Input } from "../ui/input"
 
 export function RegisterForm({
   className,

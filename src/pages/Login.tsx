@@ -1,6 +1,6 @@
 
 import logo from '../assets/Logoonly.svg'
-import { LoginForm } from '../components/login-form'
+import { LoginForm } from '../components/AuthPage/login-form'
 
 
 export function Login({ className, ...props}: React.ComponentProps<"div">) {
@@ -24,8 +24,10 @@ export function Login({ className, ...props}: React.ComponentProps<"div">) {
                 </div>
             </div>
         </div>
-        <div className="relative hidden bg-green lg:block">
-        
+        <div className="relative hidden bg-green lg:flex items-end justify-end p-8">
+            <p className="font-bold text-white text-base">
+                        Higos<span className=" font-medium ">Kayan</span>
+            </p>
       </div>
     </div>
   )

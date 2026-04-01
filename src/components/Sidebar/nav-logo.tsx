@@ -1,7 +1,7 @@
 import React from 'react'
-import { SidebarMenu } from './ui/sidebar'
+import { SidebarMenu } from '../ui/sidebar'
 
-import logoOnly from '../assets/Logoonly.svg'
+import logoOnly from '../../assets/Logoonly.svg'
 
 export const NavLogo = () => {
   return (

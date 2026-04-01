@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import logo from '../assets/Logoonly.svg'
-import { RegisterForm } from '../components/register-form'
+import { RegisterForm } from '../components/AuthPage/register-form'
 
 
 export function Register({ className, ...props}: React.ComponentProps<"div">) {
@@ -24,8 +24,10 @@ export function Register({ className, ...props}: React.ComponentProps<"div">) {
                 </div>
             </div>
         </div>
-        <div className="relative hidden bg-green lg:block">
-        
+        <div className="relative hidden bg-green lg:flex items-end justify-end p-8">
+            <p className="font-bold text-white text-base">
+                        Higos<span className=" font-medium ">Kayan</span>
+            </p>
       </div>
     </div>
   )
