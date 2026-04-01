@@ -1,4 +1,5 @@
 import { DateSelector } from "./Calendar/date";
+import { Schedule } from "./Calendar/schedule";
 import { Button } from "./ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 
@@ -28,6 +29,9 @@ export default function CalendarTask() {
                     </CardTitle>
                 </div>
                  <DateSelector/>
+                <div className="flex flex-col">
+                    <Schedule/>
+                </div>
             </CardHeader>
         </Card>
     </div>

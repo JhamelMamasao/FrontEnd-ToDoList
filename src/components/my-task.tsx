@@ -7,7 +7,7 @@ export default function UserTask() {
   return (
     <div className='md:flex gap-4'>
         <Card className='flex-1 '>
-            <CardHeader className='space-y-8'>
+            <CardHeader className='space-y-10'>
                 <div className='flex items-center justify-between'>
                     <CardDescription className='text-green-700 font-semibold'>
                         Total Projects

@@ -7,6 +7,8 @@ import { Separator } from "../components/ui/separator"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "../components/ui/breadcrumb"
 import UserTask from "../components/my-task"
 import CalendarTask from "../components/calendar-task"
+import Timer from "../components/timer"
+import RecentlyTask from "../components/Task/recently-task"
 
 export const Dashboard = () => {
   return (
@@ -39,12 +41,13 @@ export const Dashboard = () => {
               <div className="grid auto-rows-min gap-4 md:grid-cols-1">
                 <UserTask/>
               </div>
-             <div className="grid gap-4 md:grid-cols-6">
-                <div className="md:col-span-4">
-                 sdsd
+             <div className="grid gap-4 md:grid-cols-8">
+                <div className="md:col-span-6">
+                 <RecentlyTask/>
                 </div>
-                <div className="md:col-span-2">
+                <div className="md:col-span-2 space-y-3">
                   <CalendarTask />
+                  <Timer/>
                 </div>
               </div>
             </div>
