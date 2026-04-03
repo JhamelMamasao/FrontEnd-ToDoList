@@ -9,6 +9,7 @@ import UserTask from "../components/my-task"
 import CalendarTask from "../components/calendar-task"
 import Timer from "../components/timer"
 import RecentlyTask from "../components/Task/recently-task"
+import TaskPerformance from "../components/Task/task-perfomance"
 
 export const Dashboard = () => {
   return (
@@ -43,7 +44,7 @@ export const Dashboard = () => {
               </div>
              <div className="grid gap-4 md:grid-cols-8">
                 <div className="md:col-span-6">
-                 <RecentlyTask/>
+                 <TaskPerformance/>
                 </div>
                 <div className="md:col-span-2 space-y-3">
                   <CalendarTask />

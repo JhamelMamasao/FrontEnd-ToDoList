@@ -9,9 +9,6 @@ export function Schedule() {
       { title: "Meeting A", start: "14:20", end: "15:30" },
       { title: "Meeting B", start: "14:30", end: "15:00" },
       { title: "Meeting C", start: "15:00", end: "16:00" },
-      { title: "Meeting C", start: "15:00", end: "16:00" },
-      { title: "Meeting C", start: "15:00", end: "16:00" },
-      { title: "Meeting C", start: "15:00", end: "16:00" },
    ];
    
 
