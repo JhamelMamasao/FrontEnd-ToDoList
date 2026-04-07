@@ -1,7 +1,7 @@
 import { Clock, Ellipsis, Timer } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardDescription, CardHeader } from "../ui/card";
-import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
 
@@ -54,6 +54,7 @@ export function Schedule() {
                            <AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
                            <AvatarFallback>LR</AvatarFallback>
                     </Avatar>
+                    <AvatarGroupCount>5</AvatarGroupCount>
                   </AvatarGroup>
                   
                    <CardDescription className="text-xs text-green">
