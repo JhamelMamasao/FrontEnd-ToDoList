@@ -6,7 +6,7 @@ import {
 import { Separator } from "../components/ui/separator"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "../components/ui/breadcrumb"
 import UserTask from "../components/my-task"
-import CalendarTask from "../components/calendar-task"
+import CalendarTask from "../components/schedule"
 import Timer from "../components/timer"
 import RecentlyTask from "../components/Task/recently-task"
 import TaskPerformance from "../components/Task/task-perfomance"
@@ -27,7 +27,7 @@ export const Dashboard = () => {
                       <BreadcrumbList>
                         <BreadcrumbItem className="hidden md:block">
                           <BreadcrumbLink>
-                              Home
+                              Dashboard
                           </BreadcrumbLink>
                         </BreadcrumbItem>
                       </BreadcrumbList>
@@ -39,18 +39,16 @@ export const Dashboard = () => {
                 <div className="aspect-video rounded-xl bg-muted/50" />
               </div>
               <div className="min-h-screen flex-1 rounded-xl bg-muted/50 md:min-h-min" /> */}
-              <div className="grid auto-rows-min gap-4 md:grid-cols-1">
-                <UserTask/>
-              </div>
-             <div className="grid gap-4 md:grid-cols-8">
-                <div className="md:col-span-6">
-                 <TaskPerformance/>
+              <div className="grid auto-rows-min gap-4 md:grid-cols-8">
+                <div className="md:col-span-6 space-y-4">
+                  <UserTask/>
+                  <TaskPerformance/>
                 </div>
                 <div className="md:col-span-2 space-y-3">
                   <CalendarTask />
-                  <Timer/>
                 </div>
               </div>
+             
             </div>
         </SidebarInset>
     </SidebarProvider>

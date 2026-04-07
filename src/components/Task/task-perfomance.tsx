@@ -145,7 +145,7 @@ export default function TaskPerformance() {
                     </Select>
                     </CardHeader>
                     <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-                        <ChartContainer config={chartConfig} className="aspect-auto h-80 w-full">
+                        <ChartContainer config={chartConfig} className="aspect-auto h-70 w-full">
                             <AreaChart data={filteredData}>
                             <defs>
                                 <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
@@ -205,15 +205,15 @@ export default function TaskPerformance() {
                             <Area
                                 dataKey="created"
                                 type="natural"
-                                fill="url(#fillMobile)"
-                                stroke="var(--color-mobile)"
+                                stroke="#9fbf92"
+                                fill="#315822"
                                 stackId="a"
                                 />
                                 <Area
                                 dataKey="completed"
                                 type="natural"
-                                fill="url(#fillDesktop)"
-                                stroke="var(--color-desktop)"
+                                stroke="#9fbf92"
+                                fill="#e8f2e3"
                                 stackId="a"
                             />
                             </AreaChart>
