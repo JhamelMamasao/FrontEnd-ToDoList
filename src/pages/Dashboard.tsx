@@ -1,17 +1,74 @@
 import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar"
 import { AppSidebar } from "../components/Sidebar/app-sidebar"
-import {
-  SidebarInset,
-} from "../components/ui/sidebar"
+import {SidebarInset} from "../components/ui/sidebar"
 import { Separator } from "../components/ui/separator"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "../components/ui/breadcrumb"
 import UserTask from "../components/my-task"
 import CalendarTask from "../components/schedule"
-import Timer from "../components/timer"
-import RecentlyTask from "../components/Task/recently-task"
 import TaskPerformance from "../components/Task/task-perfomance"
+import { DataTable } from "../components/Task/tasks-table"
+import { columns, type Task} from "../components/Task/columns"
+
+function getData(): Task[] {
+  return [
+  {
+    id: "728ed52f",
+    name: "Design Landing Page",
+    project: "Project 1",
+    status: "In Progress",
+    priority: "Low",
+    assigned_to: "Mark",
+  },
+  {
+    id: "a1b2c3d4",
+    name: "Fix Login Bug",
+    project: "Project 1",
+    status: "In Progress",
+    priority: "High",
+    assigned_to: "Anna",
+    
+  },
+  {
+    id: "e5f6g7h8",
+    name: "Create Marketing Plan",
+    project: "Project 2",
+    status: "Done",
+    priority: "Low",
+    assigned_to: "John",
+    
+  },
+  {
+    id: "i9j0k1l2",
+    name: "Update Dashboard UI",
+    project: "Project 2",
+    status: "In Progress",
+    priority: "High",
+    assigned_to: "Lisa",
+  },
+  {
+    id: "m3n4o5p6",
+    name: "Write API Documentation",
+    project: "Project 1",
+    status: "Pending",
+    priority: "High",
+    assigned_to: "David",
+   
+  },
+  {
+    id: "q7r8s9t0",
+    name: "Test Payment System",
+    project: "Project 2",
+    status: "In Progress",
+    priority: "Medium",
+    assigned_to: "Chris",
+   
+  },
+]
+}
 
 export const Dashboard = () => {
+  const data = getData()
+  
   return (
     <div>
        <SidebarProvider>
@@ -48,6 +105,7 @@ export const Dashboard = () => {
                   <CalendarTask />
                 </div>
               </div>
+              <DataTable columns={columns} data={data}/>
              
             </div>
         </SidebarInset>

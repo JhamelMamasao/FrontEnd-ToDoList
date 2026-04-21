@@ -43,14 +43,26 @@ export const columns: ColumnDef<Task>[] = [
     accessorKey: "priority",
     header: "Priority",
     cell: ({ row }) => (
-      <Badge variant="outline" className="px-1.5 text-muted-foreground flex items-center gap-1">
-          {row.original.priority}
-      </Badge>
+      <>
+        {row.original.priority === "Low" && (
+          <Badge className="bg-green-50 text-green-700">Low</Badge>
+        )}
+        {row.original.priority === "Medium" && (
+          <Badge className="bg-yellow-50 text-yellow-700">Medium</Badge>
+        )}
+        {row.original.priority === "High" && (
+          <Badge className="bg-red-50 text-red-700">High</Badge>
+        )}
+      </>
     )
   },
   {
-    accessorKey: "assigned_to",
-    header: "Assignee",
+    accessorKey: "deadline",
+    header: "Due Status",
+  },
+  {
+    accessorKey: "created_by",
+    header: "Created by",
   },
   
 ]

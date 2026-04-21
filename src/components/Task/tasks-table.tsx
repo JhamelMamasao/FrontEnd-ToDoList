@@ -68,7 +68,7 @@ export function DataTable<TData, TValue>({
                   <TableRow key={headerGroup.id} className="border-b">
                     {headerGroup.headers.map((header) => {
                       return (
-                        <TableHead key={header.id} colSpan={header.colSpan} className="px-4 py-3 text-left">
+                        <TableHead key={header.id} colSpan={header.colSpan} className="px-7 py-2 text-left">
                           {header.isPlaceholder
                             ? null
                             : flexRender(
@@ -81,12 +81,12 @@ export function DataTable<TData, TValue>({
                   </TableRow>
                 ))}
             </TableHeader>
-            <TableBody>
+            <TableBody >
               {table.getRowModel().rows.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} >
+                  <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}  >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell key={cell.id} className="px-7 text-left">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
                     ))}
