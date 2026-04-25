@@ -55,7 +55,11 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  logout: () => void
+}
+
+export function AppSidebar({ logout, ...props }: AppSidebarProps) {
 
   return (
      <Sidebar collapsible="icon" {...props}>
@@ -67,7 +71,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <NavProjects projects={data.projects}/>
         </SidebarContent>
          <SidebarFooter>
-            <NavUser user={data.user} />
+            <NavUser logout={logout} />
         </SidebarFooter>
      </Sidebar>
   )

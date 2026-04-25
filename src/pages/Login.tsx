@@ -1,9 +1,13 @@
 
 import logo from '../assets/Logoonly.svg'
 import { LoginForm } from '../components/AuthPage/login-form'
+import { useEffect } from 'react'
 
 
-export function Login({ className, ...props}: React.ComponentProps<"div">) {
+export function Login() {
+    useEffect(() => {
+        localStorage.removeItem('token')
+    }, [])
 
     return (
     <div className='grid min-h-svh lg:grid-cols-2 bg-white'>

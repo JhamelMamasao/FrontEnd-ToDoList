@@ -8,6 +8,9 @@ import CalendarTask from "../components/schedule"
 import TaskPerformance from "../components/Task/task-perfomance"
 import { DataTable } from "../components/Task/tasks-table"
 import { columns, type Task} from "../components/Task/columns"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { getMe } from "../api/auth"
 
 function getData(): Task[] {
   return [
@@ -17,7 +20,8 @@ function getData(): Task[] {
     project: "Project 1",
     status: "In Progress",
     priority: "Low",
-    assigned_to: "Mark",
+    created_by: "Mark",
+    deadline: "2026-04-25",
   },
   {
     id: "a1b2c3d4",
@@ -25,8 +29,8 @@ function getData(): Task[] {
     project: "Project 1",
     status: "In Progress",
     priority: "High",
-    assigned_to: "Anna",
-    
+    created_by: "Anna",
+    deadline: "2026-04-22",
   },
   {
     id: "e5f6g7h8",
@@ -34,8 +38,8 @@ function getData(): Task[] {
     project: "Project 2",
     status: "Done",
     priority: "Low",
-    assigned_to: "John",
-    
+    created_by: "John",
+    deadline: "2026-04-18",
   },
   {
     id: "i9j0k1l2",
@@ -43,7 +47,8 @@ function getData(): Task[] {
     project: "Project 2",
     status: "In Progress",
     priority: "High",
-    assigned_to: "Lisa",
+    created_by: "Lisa",
+    deadline: "2026-04-24",
   },
   {
     id: "m3n4o5p6",
@@ -51,8 +56,8 @@ function getData(): Task[] {
     project: "Project 1",
     status: "Pending",
     priority: "High",
-    assigned_to: "David",
-   
+    created_by: "David",
+    deadline: "2026-04-28",
   },
   {
     id: "q7r8s9t0",
@@ -60,19 +65,39 @@ function getData(): Task[] {
     project: "Project 2",
     status: "In Progress",
     priority: "Medium",
-    assigned_to: "Chris",
-   
+    created_by: "Chris",
+    deadline: "2026-04-23",
   },
 ]
 }
 
 export const Dashboard = () => {
   const data = getData()
+  const navigate = useNavigate()
+
+
+  useEffect(() => {
+    const verifyUser = async () => {
+      try {
+        await getMe()
+      } catch {
+        localStorage.removeItem("token")
+        navigate("/", { replace: true })
+      }
+    }
+    
+    verifyUser()
+  }, [])
+
+  const logout = () => {
+    localStorage.removeItem("token")
+    navigate("/", { replace: true })
+  }
   
   return (
     <div>
        <SidebarProvider>
-        <AppSidebar />
+        <AppSidebar logout={logout} />
         <SidebarInset>
             <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
                 <div className="flex items-center gap-2 px-4">

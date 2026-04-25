@@ -1,6 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "../ui/badge";
 import { CircleCheck, Clock, Loader } from "lucide-react";
+import { AvatarFallback, Avatar } from "../ui/avatar";
 
 
 export type Task = {
@@ -9,7 +10,8 @@ export type Task = {
   project: string
   status: "In Progress" | "Done" | "Pending" 
   priority: "Low" | "Medium" | "High" 
-  assigned_to: string
+  created_by: string
+  deadline: string
 }
 
 export const columns: ColumnDef<Task>[] = [
@@ -56,13 +58,43 @@ export const columns: ColumnDef<Task>[] = [
       </>
     )
   },
-  {
-    accessorKey: "deadline",
-    header: "Due Status",
+ {
+  accessorKey: "deadline",
+  header: "Deadline",
+  cell: ({ row }) => {
+    const deadline = new Date(row.original.deadline);
+
+    return (
+      <Badge variant="outline"
+        className={"px-1.5 text-muted-foreground flex items-center gap-1"}
+      >
+        {deadline.toLocaleDateString()}
+      </Badge>
+    );
   },
-  {
-    accessorKey: "created_by",
-    header: "Created by",
+},
+ {
+  accessorKey: "created_by",
+  header: "Created By",
+  cell: ({ row }) => {
+    const name = row.original.created_by;
+
+    return (
+      <div className="flex items-center gap-2">
+        <Avatar size="sm">
+          <AvatarFallback>
+            {name
+              .split(" ")
+              .map((n) => n[0])
+              .join("")
+              .toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
+
+        <span className="text-xs">{name}</span>
+      </div>
+    );
   },
+}
   
 ]
