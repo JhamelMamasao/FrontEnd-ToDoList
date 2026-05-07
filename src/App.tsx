@@ -12,9 +12,8 @@ function App() {
     <div className='bg-[#f1f1f1] min-h-screen m-0'>
          <Routes>
             <Route path="/" element={<Login />} />
-          <Route path="/login" element={<Navigate to="/" replace />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={token ? <Dashboard/> : <Navigate to="/" replace/>}/>
+            <Route path="/dashboard" element={<Dashboard/>}/>
          </Routes>
     </div>
       

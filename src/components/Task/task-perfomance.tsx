@@ -4,14 +4,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import {  Calendar } from "lucide-react";
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, type ChartConfig } from "../ui/chart";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-
+import { dailyStats } from "../../api/task";
 
 
 
 export default function TaskPerformance() {
-    const defaultDataDate = new Date("2026-06-01");
+    const defaultDataDate = new Date();
     const [year] = React.useState(defaultDataDate.getFullYear());
     const [selectedMonth, setSelectedMonth] = React.useState((defaultDataDate.getMonth() + 1).toString());
+    const [chartData, setChartData] = React.useState<any[]>([]);
 
 
     const getDaysInMonth = (month: number, year: number): number => {
@@ -34,71 +35,7 @@ export default function TaskPerformance() {
 
    
 
-    const taskPerformanceData = [
-        { date: "2026-06-01", created: 12, completed: 8 },
-        { date: "2026-06-02", created: 18, completed: 10 },
-        { date: "2026-06-03", created: 9, completed: 6 },
-        { date: "2026-06-04", created: 22, completed: 15 },
-        { date: "2026-06-05", created: 16, completed: 11 },
-        { date: "2026-06-06", created: 25, completed: 20 },
-        { date: "2026-06-07", created: 20, completed: 14 },
-        { date: "2026-06-08", created: 14, completed: 9 },
-        { date: "2026-06-09", created: 10, completed: 7 },
-        { date: "2026-06-10", created: 28, completed: 21 },
-        { date: "2026-06-11", created: 30, completed: 24 },
-        { date: "2026-06-12", created: 17, completed: 13 },
-        { date: "2026-06-13", created: 11, completed: 8 },
-        { date: "2026-06-14", created: 26, completed: 19 },
-        { date: "2026-06-15", created: 19, completed: 15 },
-        { date: "2026-06-16", created: 23, completed: 18 },
-        { date: "2026-06-17", created: 29, completed: 22 },
-        { date: "2026-06-18", created: 8, completed: 5 },
-        { date: "2026-06-19", created: 21, completed: 16 },
-        { date: "2026-06-20", created: 24, completed: 19 },
-        { date: "2026-06-21", created: 15, completed: 10 },
-        { date: "2026-06-22", created: 18, completed: 14 },
-        { date: "2026-06-23", created: 27, completed: 22 },
-        { date: "2026-06-24", created: 13, completed: 9 },
-        { date: "2026-06-25", created: 12, completed: 8 },
-        { date: "2026-06-26", created: 25, completed: 20 },
-        { date: "2026-06-27", created: 28, completed: 23 },
-        { date: "2026-06-28", created: 16, completed: 11 },
-        { date: "2026-06-29", created: 9, completed: 6 },
-        { date: "2026-06-30", created: 30, completed: 25 },
-
-        { date: "2026-07-01", created: 14, completed: 10 },
-        { date: "2026-07-02", created: 20, completed: 15 },
-        { date: "2026-07-03", created: 11, completed: 7 },
-        { date: "2026-07-04", created: 26, completed: 20 },
-        { date: "2026-07-05", created: 18, completed: 13 },
-        { date: "2026-07-06", created: 29, completed: 24 },
-        { date: "2026-07-07", created: 21, completed: 16 },
-        { date: "2026-07-08", created: 15, completed: 10 },
-        { date: "2026-07-09", created: 12, completed: 8 },
-        { date: "2026-07-10", created: 27, completed: 22 },
-        { date: "2026-07-11", created: 31, completed: 26 },
-        { date: "2026-07-12", created: 19, completed: 14 },
-        { date: "2026-07-13", created: 13, completed: 9 },
-        { date: "2026-07-14", created: 28, completed: 21 },
-        { date: "2026-07-15", created: 22, completed: 17 },
-        { date: "2026-07-16", created: 24, completed: 19 },
-        { date: "2026-07-17", created: 30, completed: 25 },
-        { date: "2026-07-18", created: 10, completed: 6 },
-        { date: "2026-07-19", created: 23, completed: 18 },
-        { date: "2026-07-20", created: 26, completed: 20 },
-        { date: "2026-07-21", created: 16, completed: 12 },
-        { date: "2026-07-22", created: 19, completed: 14 },
-        { date: "2026-07-23", created: 28, completed: 23 },
-        { date: "2026-07-24", created: 14, completed: 10 },
-        { date: "2026-07-25", created: 13, completed: 9 },
-        { date: "2026-07-26", created: 27, completed: 22 },
-        { date: "2026-07-27", created: 29, completed: 24 },
-        { date: "2026-07-28", created: 17, completed: 12 },
-        { date: "2026-07-29", created: 11, completed: 7 },
-        { date: "2026-07-30", created: 32, completed: 27 },
-        { date: "2026-07-31", created: 25, completed: 20 },
-    ];
-
+   
     const chartConfig = {
         visitors: {
             label: "Visitors",
@@ -113,14 +50,30 @@ export default function TaskPerformance() {
         },
     } satisfies ChartConfig
 
+    React.useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const month = Number(selectedMonth);
 
-     const filteredData = taskPerformanceData.filter(item => {
-        const date = new Date(item.date)
-        const month = date.getMonth()  + 1;
-        const yearMatch = date.getFullYear() === year;
+                const startDate = `${year}-${month
+                    .toString()
+                    .padStart(2, "0")}-01`;
 
-        return month.toString() === selectedMonth && yearMatch;
-    })
+                const endDate = `${year}-${month
+                    .toString()
+                    .padStart(2, "0")}-${getDaysInMonth(month, year)}`;
+
+                const data = await dailyStats(startDate, endDate)
+                console.log("API DATA:", data)
+                setChartData(data)
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchStats();
+    }, [selectedMonth, year])
+     
 
 
     return (
@@ -146,7 +99,7 @@ export default function TaskPerformance() {
                     </CardHeader>
                     <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
                         <ChartContainer config={chartConfig} className="aspect-auto h-70 w-full">
-                            <AreaChart data={filteredData}>
+                            <AreaChart data={chartData}>
                             <defs>
                                 <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
                                     <stop
@@ -175,7 +128,7 @@ export default function TaskPerformance() {
                             </defs>
                             <CartesianGrid vertical={false}/>
                            <XAxis
-                                dataKey="date"
+                                dataKey="day"
                                 tickLine={false}
                                 axisLine={false}
                                 tickMargin={8}
