@@ -17,11 +17,12 @@ export const login = async (email: string, password: string) => {
     return res.data
 }
 
-export const getMe = async () => {
+export const getMe = async (signal?: AbortSignal) => {
   const res = await axios.get(`${API_URL}/user/getme`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
+    },
+    signal
   })
 
   return res.data

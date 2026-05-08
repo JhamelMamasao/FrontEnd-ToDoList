@@ -2,8 +2,8 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar} from '../u
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { BadgeCheck, Bell, ChevronsUpDown, LogOut, Settings } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import { getMe } from '../../api/auth'
+import { useFetchData } from '../../hooks/useFetchData'
 
 
 type User = {
@@ -14,18 +14,13 @@ type User = {
 
 export function NavUser({ logout }: { logout: () => void }) {
   const { isMobile } = useSidebar()
-  const [user, setUser] = useState<User | null>(null)
+  const { data: user, loading } = useFetchData<User>(
+    'user-profile',
+    () => getMe(),
+    { ttl: 10 * 60 * 1000, deduplicate: true } // 10 min cache
+  )
 
-useEffect(() => {
-  const fetchUser = async () => {
-    const data = await getMe()
-    setUser(data)
-  }
-
-  fetchUser()
-}, [])
-
-if (!user) {
+if (loading || !user) {
   return <span>Loading...</span>
 }
   

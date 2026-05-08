@@ -75,19 +75,28 @@ export const Dashboard = () => {
   const data = getData()
   const navigate = useNavigate()
 
-
   useEffect(() => {
+    const abortController = new AbortController()
+    
     const verifyUser = async () => {
       try {
-        await getMe()
-      } catch {
-        localStorage.removeItem("token")
-        navigate("/", { replace: true })
+        await getMe(abortController.signal)
+      } catch (error) {
+        // Only handle error if request wasn't aborted
+        if (!abortController.signal.aborted) {
+          localStorage.removeItem("token")
+          navigate("/", { replace: true })
+        }
       }
     }
     
     verifyUser()
-  }, [])
+    
+    // Cleanup: abort request if component unmounts
+    return () => {
+      abortController.abort()
+    }
+  }, [navigate])
 
   const logout = () => {
     localStorage.removeItem("token")

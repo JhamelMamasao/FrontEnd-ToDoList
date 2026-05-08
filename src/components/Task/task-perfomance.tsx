@@ -51,6 +51,8 @@ export default function TaskPerformance() {
     } satisfies ChartConfig
 
     React.useEffect(() => {
+        const abortController = new AbortController()
+        
         const fetchStats = async () => {
             try {
                 const month = Number(selectedMonth);
@@ -63,15 +65,25 @@ export default function TaskPerformance() {
                     .toString()
                     .padStart(2, "0")}-${getDaysInMonth(month, year)}`;
 
-                const data = await dailyStats(startDate, endDate)
-                console.log("API DATA:", data)
-                setChartData(data)
+                const data = await dailyStats(startDate, endDate, abortController.signal)
+                
+                if (!abortController.signal.aborted && data) {
+                    console.log("API DATA:", data)
+                    setChartData(data)
+                }
             } catch (error) {
-                console.error(error);
+                if (!abortController.signal.aborted) {
+                    console.error(error)
+                }
             }
         };
 
         fetchStats();
+        
+        // Cleanup: abort request if component unmounts or dependencies change
+        return () => {
+            abortController.abort()
+        }
     }, [selectedMonth, year])
      
 

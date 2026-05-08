@@ -1,8 +1,8 @@
 import { Card, CardDescription, CardHeader, CardTitle } from './ui/card'
 import { Ellipsis } from 'lucide-react'
 import { Button } from './ui/button'
-import { useEffect, useState } from 'react'
 import { getStats } from '../api/task'
+import { useFetchData } from '../hooks/useFetchData'
 
 type Stats = {
     totalProjects: number,
@@ -12,20 +12,11 @@ type Stats = {
 
 
 export default function UserTask() {
-    const [stats, setStats] = useState<Stats | null>(null)
-
-    useEffect(() => {
-        const fetchStats = async () => {
-            try {
-                const data = await getStats()
-                setStats(data)
-            } catch(err) {
-                console.error(err)
-            }
-        }
-
-        fetchStats()
-    }, [])
+    const { data: stats } = useFetchData<Stats>(
+        'task-stats',
+        () => getStats(),
+        { ttl: 5 * 60 * 1000, deduplicate: true } // 5 min cache
+    )
 
 
   return (
