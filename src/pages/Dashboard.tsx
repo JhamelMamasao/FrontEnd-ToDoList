@@ -7,96 +7,14 @@ import UserTask from "../components/my-task"
 import CalendarTask from "../components/schedule"
 import TaskPerformance from "../components/Task/task-perfomance"
 import { DataTable } from "../components/Task/tasks-table"
-import { columns, type Task} from "../components/Task/columns"
-import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { getMe } from "../api/auth"
-
-function getData(): Task[] {
-  return [
-  {
-    id: "728ed52f",
-    name: "Design Landing Page",
-    project: "Project 1",
-    status: "In Progress",
-    priority: "Low",
-    created_by: "Mark",
-    deadline: "2026-04-25",
-  },
-  {
-    id: "a1b2c3d4",
-    name: "Fix Login Bug",
-    project: "Project 1",
-    status: "In Progress",
-    priority: "High",
-    created_by: "Anna",
-    deadline: "2026-04-22",
-  },
-  {
-    id: "e5f6g7h8",
-    name: "Create Marketing Plan",
-    project: "Project 2",
-    status: "Done",
-    priority: "Low",
-    created_by: "John",
-    deadline: "2026-04-18",
-  },
-  {
-    id: "i9j0k1l2",
-    name: "Update Dashboard UI",
-    project: "Project 2",
-    status: "In Progress",
-    priority: "High",
-    created_by: "Lisa",
-    deadline: "2026-04-24",
-  },
-  {
-    id: "m3n4o5p6",
-    name: "Write API Documentation",
-    project: "Project 1",
-    status: "Pending",
-    priority: "High",
-    created_by: "David",
-    deadline: "2026-04-28",
-  },
-  {
-    id: "q7r8s9t0",
-    name: "Test Payment System",
-    project: "Project 2",
-    status: "In Progress",
-    priority: "Medium",
-    created_by: "Chris",
-    deadline: "2026-04-23",
-  },
-]
-}
+import { useDashboardData } from "../hooks/dashbords"
+import { columns } from "../components/Task/columns"
 
 export const Dashboard = () => {
-  const data = getData()
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const abortController = new AbortController()
-    
-    const verifyUser = async () => {
-      try {
-        await getMe(abortController.signal)
-      } catch (error) {
-        // Only handle error if request wasn't aborted
-        if (!abortController.signal.aborted) {
-          localStorage.removeItem("token")
-          navigate("/", { replace: true })
-        }
-      }
-    }
-    
-    verifyUser()
-    
-    // Cleanup: abort request if component unmounts
-    return () => {
-      abortController.abort()
-    }
-  }, [navigate])
+  const dashboardData = useDashboardData()
+  const tasks = dashboardData.tasks
 
   const logout = () => {
     localStorage.removeItem("token")
@@ -139,7 +57,7 @@ export const Dashboard = () => {
                   <CalendarTask />
                 </div>
               </div>
-              <DataTable columns={columns} data={data}/>
+              <DataTable columns={columns} data={tasks}/>
              
             </div>
         </SidebarInset>

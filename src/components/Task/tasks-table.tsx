@@ -1,7 +1,8 @@
 import {flexRender,getCoreRowModel,useReactTable} from "@tanstack/react-table"
 import type { ColumnDef } from "@tanstack/react-table";
+import { useMemo, useState } from "react";
 import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow,} from "../../components/ui/table"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { ChevronDown, Columns2, Plus } from "lucide-react";
 
@@ -14,11 +15,39 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const [selectedProjectLabel, setSelectedProjectLabel] = useState("All Projects")
+
+  const projectLabels = useMemo(() => {
+    const labels = new Set<string>()
+
+    data.forEach((item) => {
+      const project = (item as { project?: unknown }).project
+      if (typeof project === "string" && project.trim()) {
+        labels.add(project)
+      }
+    })
+
+    return Array.from(labels)
+  }, [data])
+
+  const filteredData = useMemo(() => {
+    if (selectedProjectLabel === "All Projects") {
+      return data
+    }
+
+    return data.filter((item) => {
+      const project = (item as { project?: unknown }).project
+      return String(project ?? "") === selectedProjectLabel
+    })
+  }, [data, selectedProjectLabel])
+
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
+
+  
 
   return (
     <div className="w-full">
@@ -26,14 +55,22 @@ export function DataTable<TData, TValue>({
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="default" size="sm" className="bg-green-50 text-green-700">
-                     <span className="hidden lg:inline">All Projects</span>
+                     <span className="hidden lg:inline">{selectedProjectLabel}</span>
                      <ChevronDown/>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuGroup>
-                    <DropdownMenuLabel>Project 1</DropdownMenuLabel>
-                    <DropdownMenuLabel>Project 2</DropdownMenuLabel>
+                    <DropdownMenuItem onClick={() => setSelectedProjectLabel("All Projects")}>All Projects</DropdownMenuItem>
+                    {projectLabels.length > 0 ? (
+                      projectLabels.map((label) => (
+                        <DropdownMenuItem key={label} onClick={() => setSelectedProjectLabel(label)}>
+                          {label}
+                        </DropdownMenuItem>
+                      ))
+                    ) : (
+                      <DropdownMenuLabel>No projects found</DropdownMenuLabel>
+                    )}
                 </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>
@@ -86,7 +123,7 @@ export function DataTable<TData, TValue>({
                 table.getRowModel().rows.map((row) => (
                   <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}  >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="px-7 text-left">
+                      <TableCell key={cell.id} className="px-8 text-left">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
                     ))}

@@ -47,3 +47,24 @@ export const dailyStats = async (startDate: string, endDate: string, signal?: Ab
         throw error
     }
 }
+
+export const showTasksinTable = async (signal?: AbortSignal) => {
+    try {
+        const res = await axios.get(`${API_URL}/projectTask/getAll`, {
+           headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+            signal
+        })
+
+        console.log("TABLE:", res.data)
+        return res.data
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('tasksTable request cancelled')
+            return null
+        }
+        console.error(error)
+        throw error
+    }
+}

@@ -77,17 +77,20 @@ export const columns: ColumnDef<Task>[] = [
   accessorKey: "created_by",
   header: "Created By",
   cell: ({ row }) => {
-    const name = row.original.created_by;
+    const name = (row.original.created_by ?? "").trim() || "Unknown"
+    const initials = name
+      .split(" ")
+      .filter(Boolean)
+      .map((n) => n[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase()
 
     return (
       <div className="flex items-center gap-2">
         <Avatar size="sm">
           <AvatarFallback>
-            {name
-              .split(" ")
-              .map((n) => n[0])
-              .join("")
-              .toUpperCase()}
+            {initials || "UN"}
           </AvatarFallback>
         </Avatar>
 
