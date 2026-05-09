@@ -1,8 +1,8 @@
-import { Card, CardDescription, CardHeader, CardTitle } from './ui/card'
+import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card'
 import { Ellipsis } from 'lucide-react'
-import { Button } from './ui/button'
-import { getStats } from '../api/task'
-import { useFetchData } from '../hooks/useFetchData'
+import { Button } from '../ui/button'
+import { getStats } from '../../api/task'
+import { useFetchData } from '../../hooks/useFetchData'
 
 type Stats = {
     totalProjects: number,

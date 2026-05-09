@@ -1,8 +1,8 @@
 
-import { Schedule } from "./Calendar/meetings";
-import { Button } from "./ui/button";
-import { Card, CardDescription, CardHeader } from "./ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Schedule } from "./meetings";
+import { Button } from "../ui/button";
+import { Card, CardDescription, CardHeader } from "../ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 
 export default function CalendarTask() {

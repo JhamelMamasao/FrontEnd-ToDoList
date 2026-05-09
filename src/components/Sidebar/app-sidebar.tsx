@@ -1,4 +1,4 @@
-import { Calendar, Frame, Home, Inbox, Map, PieChart, Settings2, } from "lucide-react"
+import { Calendar, Home, Inbox, Settings2 } from "lucide-react"
 import * as React from "react"
 import { SidebarHeader, Sidebar, SidebarContent, SidebarFooter } from "../ui/sidebar"
 import { NavProjects } from "./nav-projects"
@@ -36,23 +36,6 @@ const data = {
       icon: Settings2,
     },
   ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
 }
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
@@ -68,7 +51,7 @@ export function AppSidebar({ logout, ...props }: AppSidebarProps) {
         </SidebarHeader>
          <SidebarContent>
             <NavMain items={data.navMain} />
-            <NavProjects projects={data.projects}/>
+          <NavProjects />
         </SidebarContent>
          <SidebarFooter>
             <NavUser logout={logout} />
