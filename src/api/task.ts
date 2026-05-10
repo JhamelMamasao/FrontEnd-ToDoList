@@ -1,5 +1,4 @@
 import axios from "axios"
-import { data } from "react-router-dom"
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -62,6 +61,28 @@ export const showTasksinTable = async (signal?: AbortSignal) => {
     } catch (error) {
         if (axios.isCancel(error)) {
             console.log('tasksTable request cancelled')
+            return null
+        }
+        console.error(error)
+        throw error
+    }
+}
+
+
+export const getTask = async (projectId: number, taskId: number, signal?: AbortSignal) => {
+    try {
+        const res = await axios.get(`${API_URL}/projectTask/${projectId}/${taskId}/task`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+            signal
+        })
+
+        console.log("Data:", res.data)
+        return res.data
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('getTask request cancelled')
             return null
         }
         console.error(error)

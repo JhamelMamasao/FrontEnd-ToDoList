@@ -5,6 +5,8 @@ import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow,} from "../../c
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { ChevronDown, Columns2, Plus } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import ContentTask from "./taskcontent"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -122,11 +124,23 @@ export function DataTable<TData, TValue>({
               {table.getRowModel().rows.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}  >
-                    {row.getVisibleCells().map((cell) => (
+                    {row.getVisibleCells().map((cell) => {
+                      const taskData = row.original as any
+                      return (
                       <TableCell key={cell.id} className="px-8 text-left">
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                       <Sheet>
+                          <SheetTrigger asChild>
+                              <div className="cursor-pointer">
+                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                              </div>
+                          </SheetTrigger>
+                          <SheetContent side="right" className="min-w-xl">
+                            <ContentTask taskId={taskData.taskId} projectId={taskData.projectId} />
+                          </SheetContent>
+                       </Sheet>
                       </TableCell>
-                    ))}
+                    )
+                    })}
                   </TableRow>
                 ))
               ) : (

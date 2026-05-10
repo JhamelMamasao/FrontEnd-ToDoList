@@ -56,9 +56,30 @@ export const normalizeTasks = (payload: unknown): Task[] => {
   return rawList.map((rawTask, index) => {
     const task = rawTask as Record<string, unknown>
     const projectValue = task.project as Record<string, unknown> | string | undefined
+    const taskIdValue = task.taskId ?? task.task_id ?? task.id ?? task._id ?? index
+    const projectIdValue =
+      task.projectId ??
+      task.project_id ??
+      (typeof projectValue === "object" && projectValue !== null
+        ? projectValue.id ?? projectValue._id ?? projectValue.projectId ?? projectValue.project_id
+        : undefined)
+
+    const toIdString = (value: unknown): string | undefined => {
+      if (typeof value === "number" && Number.isFinite(value)) {
+        return String(value)
+      }
+
+      if (typeof value === "string" && value.trim()) {
+        return value.trim()
+      }
+
+      return undefined
+    }
 
     return {
       id: String(task.id ?? task._id ?? index),
+      taskId: toIdString(taskIdValue) ?? String(index),
+      projectId: toIdString(projectIdValue),
       name: String(task.name ?? task.title ?? "Untitled Task"),
       project:
         typeof projectValue === "object" && projectValue !== null

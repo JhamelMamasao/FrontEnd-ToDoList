@@ -6,6 +6,8 @@ import { AvatarFallback, Avatar } from "../ui/avatar";
 
 export type Task = {
   id: string
+  taskId?: string | number
+  projectId?: string | number
   name: string
   project: string
   status: "In Progress" | "Done" | "Pending" 
