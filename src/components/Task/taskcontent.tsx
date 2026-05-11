@@ -1,9 +1,10 @@
-import { Maximize2, Loader, Timer } from 'lucide-react'
+import { Maximize2, Loader, Timer, CircleCheck, CheckCircle2, Calendar, Users } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import { getTask } from '../../api/task'
 import { SheetDescription, SheetTitle } from '../ui/sheet'
 import { Badge } from '../ui/badge'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 
 interface TaskContentProps {
   taskId?: number | string
@@ -16,6 +17,8 @@ export default function taskcontent({ taskId, projectId }: TaskContentProps) {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    const controller = new AbortController()
+
     const fetchTask = async () => {
       if (taskId == null || projectId == null) {
         setTaskData(null)
@@ -27,16 +30,26 @@ export default function taskcontent({ taskId, projectId }: TaskContentProps) {
       setError(null)
       try {
         console.log("Fetching task details:", { projectId, taskId })
-        const data = await getTask(Number(projectId), Number(taskId))
-        setTaskData(data)
+        const data = await getTask(Number(projectId), Number(taskId), controller.signal)
+        if (!controller.signal.aborted) {
+          setTaskData(data)
+        }
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load task')
+        if (!controller.signal.aborted) {
+          setError(err instanceof Error ? err.message : 'Failed to load task')
+        }
       } finally {
-        setLoading(false)
+        if (!controller.signal.aborted) {
+          setLoading(false)
+        }
       }
     }
 
     fetchTask()
+
+    return () => {
+      controller.abort()
+    }
   }, [taskId, projectId])
 
   return (
@@ -73,7 +86,11 @@ export default function taskcontent({ taskId, projectId }: TaskContentProps) {
                         {taskData.name || "Untitled Task"}
                     </SheetTitle>
 
-                     <div className="flex items-center justify-between">
+
+                    {/* content  */} 
+                    {/* Created */}
+                    <div className='space-y-3 w-full max-w-md'>
+                         <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <Timer
                                 size={16}
@@ -85,7 +102,7 @@ export default function taskcontent({ taskId, projectId }: TaskContentProps) {
                             </SheetDescription>
                         </div>
 
-                        <p className='font-semibold'>
+                        <p className='font-medium'>
                         {taskData.created_at
                           ? new Date(taskData.created_at).toLocaleString('en-PH', {
                               year: 'numeric',
@@ -97,21 +114,102 @@ export default function taskcontent({ taskId, projectId }: TaskContentProps) {
                           : 'No date available'}
                         </p>
                     </div>
+
+                    {/* Status */}
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                            <Timer
+                            <Loader
                                 size={16}
                                 className="text-muted-foreground"
                             />
 
                             <SheetDescription className="text-muted-foreground">
-                                Created time
+                                Status
                             </SheetDescription>
                         </div>
 
-                        <p className='font-semibold'>
-                        {taskData.created_at
-                          ? new Date(taskData.created_at).toLocaleString('en-PH', {
+                     {/* <Badge variant="outline" className="px-1.5 text-muted-foreground flex items-center gap-1">
+                        {taskData.status === "DONE" && (
+                            <CircleCheck className="fill-green-500 dark:fill-green-400" />
+                        )}
+                        {taskData.status === "IN_PROGRESS" && (
+                            <Loader className="animate-spin text-gray-500" />
+                        )}
+                        {taskData.status === "PENDING" && (
+                            <Clock className="text-yellow-500" />
+                        )}
+                        {taskData.status}
+                    </Badge> */}
+
+
+                    {taskData.status === "DONE" && (
+                        <Badge className='px-1.5 bg-green-100 text-green-700 gap-2'>
+                            <CircleCheck className="fill-white" />
+                            {taskData.status}
+                        </Badge>
+                    )}
+                     {taskData.status === "IN_PROGRESS" && (
+                        <Badge className='px-1.5 bg-blue-100 text-blue-700 gap-2'>
+                            <CircleCheck className="fill-white" />
+                            {taskData.status}
+                        </Badge>
+                    )}
+                     {taskData.status === "PENDING" && (
+                        <Badge className='px-1.5 bg-yellow-100 text-yellow-700 gap-2'>
+                            <CircleCheck className="fill-white" />
+                            {taskData.status}
+                        </Badge>
+                    )}
+                    </div>
+
+
+                    {/* Priority */}
+                    <div className='flex items-center justify-between'>
+                         <div className="flex items-center gap-2">
+                            <CheckCircle2
+                                size={16}
+                                className="text-muted-foreground"
+                            />
+
+                            <SheetDescription className="text-muted-foreground">
+                                Priority
+                            </SheetDescription>
+                        </div>
+
+                    {taskData.priority === "HIGH" && (
+                        <Badge className='px-1.5 bg-red-100 text-red-700 gap-2'>
+                            {taskData.priority}
+                        </Badge>
+                    )}
+                     {taskData.priority === "MEDIUM" && (
+                        <Badge className='px-1.5 bg-amber-100 text-amber-700 gap-2'>
+                            {taskData.priority}
+                        </Badge>
+                    )}
+                     {taskData.priority === "LOW" && (
+                        <Badge className='px-1.5 bg-green-100 text-green-700 gap-2'>
+                            {taskData.priority}
+                        </Badge>
+                    )}
+                    </div>
+
+
+                    {/* DueDate */}
+                     <div className='flex items-center justify-between'>
+                         <div className="flex items-center gap-2">
+                            <Calendar
+                                size={16}
+                                className="text-muted-foreground"
+                            />
+
+                            <SheetDescription className="text-muted-foreground">
+                                Deadline
+                            </SheetDescription>
+                        </div>
+
+                    <p className='font-medium'>
+                        {taskData.deadline
+                          ? new Date(taskData.deadline).toLocaleString('en-PH', {
                               year: 'numeric',
                               month: 'short',
                               day: 'numeric',
@@ -121,6 +219,66 @@ export default function taskcontent({ taskId, projectId }: TaskContentProps) {
                           : 'No date available'}
                         </p>
                     </div>
+
+
+                    {/* AssingedTo */}
+                    <div className='flex items-center justify-between'>
+                         <div className="flex items-center gap-2">
+                            <Users
+                                size={16}
+                                className="text-muted-foreground"
+                            />
+
+                            <SheetDescription className="text-muted-foreground">
+                                Assigned to
+                            </SheetDescription>
+                        </div>
+
+                        {(() => {
+                          const getInitials = (name: string) => {
+                            return name
+                              .split(' ')
+                              .map(n => n[0])
+                              .join('')
+                              .toUpperCase()
+                              .slice(0, 2)
+                          }
+                          
+                          // Handle both array and single object
+                          const assignedUsers = Array.isArray(taskData.assignedTo) 
+                            ? taskData.assignedTo 
+                            : taskData.assignedTo ? [taskData.assignedTo] : []
+                          
+                          return (
+                            <div className='flex -space-x-2'>
+                              {assignedUsers.length > 0 ? (
+                                assignedUsers.map((user: any, index: number) => {
+                                  const userName = typeof user === 'object' ? user?.name : user
+                                  const profilePic = typeof user === 'object' ? user?.profile_pic : null
+                                  const initials = userName ? getInitials(userName) : 'UN'
+                                  
+                                  return (
+                                    <Avatar key={index} className='border-2 border-white'  size='sm'>
+                                      {profilePic && <AvatarImage src={profilePic} alt={userName || 'User'} />}
+                                      <AvatarFallback>{initials}</AvatarFallback>
+                                    </Avatar>
+                                  )
+                                })
+                              ) : (
+                                <Avatar>
+                                  <AvatarFallback>UN</AvatarFallback>
+                                </Avatar>
+                              )}
+                            </div>
+                          )
+                        })()}
+                       
+
+
+                    </div>
+
+                    </div>
+
               </div>
             </>
           )}
