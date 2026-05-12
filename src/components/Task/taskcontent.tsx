@@ -1,10 +1,11 @@
-import { Maximize2, Loader, Timer, CircleCheck, CheckCircle2, Calendar, Users } from 'lucide-react'
+import { Maximize2, Loader, Timer, CircleCheck, CheckCircle2, Calendar, Users, FileText, Paperclip } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import { getTask } from '../../api/task'
 import { SheetDescription, SheetTitle } from '../ui/sheet'
 import { Badge } from '../ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Card, CardDescription } from '../ui/card'
 
 interface TaskContentProps {
   taskId?: number | string
@@ -77,7 +78,7 @@ export default function taskcontent({ taskId, projectId }: TaskContentProps) {
           
           {taskData && !loading && (
             <>
-              <div className='space-y-4 text-left'>
+              <div className='space-y-3 text-left'>
                     <Badge variant="outline" className="w-fit px-2 py-0.5 text-muted-foreground">
                         {taskData.project.name}
                     </Badge>
@@ -272,11 +273,40 @@ export default function taskcontent({ taskId, projectId }: TaskContentProps) {
                             </div>
                           )
                         })()}
-                       
-
-
+                    </div>
                     </div>
 
+                    <div className='max-w-lg'>
+                      <div className='flex items-start flex-col space-y-4'>
+                        <div className='flex items-center gap-2'>
+                          <FileText
+                            size={16}
+                            className="text-muted-foreground"/>
+
+                            <SheetDescription className="text-muted-foreground">
+                                Description
+                            </SheetDescription>
+                        </div>
+
+                        <Card>
+                            <CardDescription className='pl-3 pr-3 text-justify'>
+                                {taskData.description}
+                              </CardDescription>
+                        </Card>
+                    </div>
+
+                    <div className='flex items-start flex-col space-y-4 mt-3'>
+                      <div className='flex items-center gap-2'>
+                        <Paperclip size={16}
+                            className="text-muted-foreground"/>
+
+                        <SheetDescription className="text-muted-foreground">
+                                Attachment
+                        </SheetDescription>
+
+                      </div>
+                      
+                    </div>
                     </div>
 
               </div>
