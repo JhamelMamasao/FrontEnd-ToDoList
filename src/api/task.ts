@@ -89,3 +89,25 @@ export const getTask = async (projectId: number, taskId: number, signal?: AbortS
         throw error
     }
 }
+
+export const getAttachment = async (projectId: number, taskId: number, signal?: AbortSignal) => {
+    try {
+        console.log('fetching attachment', projectId, taskId)
+        const res = await axios.get(`${API_URL}/attachment/${projectId}/${taskId}/getFiles`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+            signal
+        })
+
+        console.log('attachment:', res.data)
+        return res.data
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('getAtachment request cancelled')
+            return null
+        }
+        console.error(error)
+        throw error
+    }
+}

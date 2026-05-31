@@ -1,4 +1,4 @@
-import type { Task } from "../Task/columns"
+import type { Task } from "./columns"
 
 const normalizeStatus = (value: unknown): Task["status"] => {
   const status = String(value ?? "").toUpperCase()

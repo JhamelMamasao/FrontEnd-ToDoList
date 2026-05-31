@@ -3,13 +3,13 @@ import { AppSidebar } from "../components/Sidebar/app-sidebar"
 import {SidebarInset} from "../components/ui/sidebar"
 import { Separator } from "../components/ui/separator"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "../components/ui/breadcrumb"
-import UserTask from "../components/Task/my-task"
+import UserTask from "../components/Task/MyTask"
 import CalendarTask from "../components/Schedule/schedule"
-import TaskPerformance from "../components/Task/task-perfomance"
-import { DataTable } from "../components/Task/tasks-table"
+import TaskPerformance from "../components/Task/TaskPerformance"
+import { DataTable } from "../components/Task/TasksTable"
 import { useNavigate } from "react-router-dom"
 import { useDashboardData } from "../hooks/dashbords"
-import { columns } from "../components/Task/columns"
+import { columns } from "../components/Task/Columns"
 
 export const Dashboard = () => {
   const navigate = useNavigate()

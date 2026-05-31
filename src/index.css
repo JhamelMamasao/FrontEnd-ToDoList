@@ -173,3 +173,26 @@
   -ms-overflow-style: none;  /* IE, Edge */
   scrollbar-width: none;     /* Firefox */
 }
+
+/* Thin, visible scrollbar for horizontal attachment lists */
+.attachment-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #b5b5b5 transparent;
+}
+
+.attachment-scroll::-webkit-scrollbar {
+  height: 5px;
+}
+
+.attachment-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.attachment-scroll::-webkit-scrollbar-thumb {
+  background-color: #b5b5b5;
+  border-radius: 9999px;
+}
+
+.attachment-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #9a9a9a;
+}

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { getMe } from "../api/auth"
 import { showTasksinTable } from "../api/task"
-import { normalizeTasks } from "../components/Task/tasks"
+import { normalizeTasks } from "../components/Task/Tasks"
 import { useNavigate } from "react-router-dom" 
-import type { Task } from "../components/Task/columns"
+import type { Task } from "../components/Task/Columns"
 
 export const useDashboardData = () => {
   const [tasks, setTasks] = useState<Task[]>([])

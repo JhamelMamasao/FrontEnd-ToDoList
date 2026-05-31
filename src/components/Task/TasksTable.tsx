@@ -1,7 +1,7 @@
 import {flexRender,getCoreRowModel,useReactTable} from "@tanstack/react-table"
 import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
-import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow,} from "../../components/ui/table"
+import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow,} from "../ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { ChevronDown, Columns2, Plus } from "lucide-react";
