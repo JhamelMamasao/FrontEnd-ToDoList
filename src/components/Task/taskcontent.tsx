@@ -4,11 +4,10 @@ import { Button } from '../ui/button'
 import { getTask } from '../../api/task'
 import { SheetDescription, SheetTitle } from '../ui/sheet'
 import { Badge } from '../ui/badge'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { Card, CardDescription } from '../ui/card'
-import AttachmentCard from '../TaskSidebar/attachmentCard'
-import DescriptionCard from '../TaskSidebar/descriptionCard'
+import AttachmentCard from '../TaskSidebar/AttachmentCard'
+import DescriptionCard from '../TaskSidebar/DescriptionCard'
 import InformationCard from '../TaskSidebar/InformationCard'
+import CommentCard from '../TaskSidebar/CommentCard'
 
 interface TaskContentProps {
   taskId?: number | string
@@ -103,6 +102,11 @@ export default function taskcontent({ taskId, projectId }: TaskContentProps) {
                       <AttachmentCard projectId={projectId} taskId={taskId}/>
                   </div>
               </div>
+
+              <div className='max-w-lg mt-5'>
+                <CommentCard projectId={projectId} taskId={taskId}/>
+              </div>
+             
             </>
           )}
           
@@ -114,6 +118,7 @@ export default function taskcontent({ taskId, projectId }: TaskContentProps) {
             <p className='text-sm text-amber-600 mt-2'>Missing task ID or project ID for this row.</p>
           ) : null}
         </div>
+        
     </div>
   )
 }

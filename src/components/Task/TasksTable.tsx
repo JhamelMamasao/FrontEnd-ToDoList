@@ -6,7 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { Button } from "../ui/button";
 import { ChevronDown, Columns2, Plus } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import ContentTask from "./taskcontent"
+import ContentTask from "./TaskContent"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]

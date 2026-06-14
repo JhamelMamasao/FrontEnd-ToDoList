@@ -111,3 +111,26 @@ export const getAttachment = async (projectId: number, taskId: number, signal?: 
         throw error
     }
 }
+
+export const getComments = async (projectId: number, taskId: number, signal?: AbortSignal) => {
+    try {
+        console.log('fetching comments', projectId, taskId)
+        const res = await axios.get(`${API_URL}/comments/${projectId}/${taskId}/getComment`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+            signal
+        })
+
+        console.log('comment', res.data)
+        return res.data
+    } catch (error) {
+        if (axios.isCancel(error)) {
+            console.log('getComments request cancelled')
+            return null
+        }
+        console.error(error)
+        throw error
+        
+    }
+}

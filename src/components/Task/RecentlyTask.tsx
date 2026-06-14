@@ -1,7 +1,7 @@
 import { Ellipsis } from "lucide-react";
 import { Card, CardDescription, CardHeader } from "../ui/card";
 import { Button } from "../ui/button";
-import Task from "./taskcard";
+import Task from "./TaskCard";
 
 export default function RecentlyTask() {
 
