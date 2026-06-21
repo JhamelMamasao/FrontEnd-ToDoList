@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuAction, SidebarMenuButton, SidebarMenuItem, useSidebar } from "../ui/sidebar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { Folder, Forward, Frame, MoreHorizontal, Trash2 } from "lucide-react"
@@ -26,11 +27,23 @@ export function NavProjects({
               ? response.projects
               : []
 
-        const normalizedProjects = rawProjects.map((project: Record<string, unknown>, index: number) => ({
-          id: String(project.id ?? project._id ?? index),
-          name: String(project.name ?? project.projectName ?? project.title ?? `Project ${index + 1}`),
-          url: String(project.url ?? "#"),
-        }))
+        const normalizedProjects = rawProjects.map((project: Record<string, unknown>, index: number) => {
+          const id = String(
+            project.id ??
+            project._id ??
+            project.projectId ??
+            project.project_id ??
+            project.ID ??
+            project.idProject ??
+            index + 1
+          )
+
+          return {
+            id,
+            name: String(project.name ?? project.projectName ?? project.title ?? `Project ${index + 1}`),
+            url: String(project.url ?? `/project/${id}`),
+          }
+        })
 
         setProjects(normalizedProjects)
       } catch (error) {
@@ -52,10 +65,10 @@ export function NavProjects({
         {projects.map((item) => (
             <SidebarMenuItem key={item.name}>
               <SidebarMenuButton asChild>
-                  <a href={item.url}>
+                  <Link to={item.url}>
                     <Frame />
                     <span>{item.name}</span>
-                  </a>
+                  </Link>
               </SidebarMenuButton>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>

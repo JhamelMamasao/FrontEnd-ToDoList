@@ -39,7 +39,6 @@ export function useFetchData<T>(
           return
         }
 
-        // Check for in-flight request (deduplication)
         if (shouldDeduplicate && inFlightRequests.has(key)) {
           try {
             const result = await inFlightRequests.get(key)
@@ -88,7 +87,6 @@ export function useFetchData<T>(
 
     fetchData()
 
-    // Cleanup: abort request if component unmounts
     return () => {
       controller.abort()
     }

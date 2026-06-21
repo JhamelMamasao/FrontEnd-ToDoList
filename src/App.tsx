@@ -1,11 +1,10 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { Login } from './pages/Login'
 import { Register } from './pages/Register'
 import { Dashboard } from './pages/Dashboard'
+import { Project } from './pages/Project'
 
 function App() {
-  const token = localStorage.getItem('token')
-
 
   return (
     <>
@@ -14,6 +13,8 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path="/project/:projectId" element={<Project/>}/>
+          <Route path="/project" element={<Project/>}/>
          </Routes>
     </div>
       

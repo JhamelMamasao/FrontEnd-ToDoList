@@ -47,8 +47,6 @@ export default function AttachmentCard({ taskId, projectId}: AttachmentCardProps
         }
     }
 
-
-
     useEffect(() => {
         if(!projectId || !taskId) return 
 

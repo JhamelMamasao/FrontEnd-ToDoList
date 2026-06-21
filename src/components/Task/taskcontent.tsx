@@ -1,13 +1,13 @@
-import { Maximize2, Loader, Timer, CircleCheck, CheckCircle2, Calendar, Users, FileText, Paperclip, Download } from 'lucide-react'
+import { Maximize2, Loader, SquarePen } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import { getTask } from '../../api/task'
-import { SheetDescription, SheetTitle } from '../ui/sheet'
+import { SheetTitle } from '../ui/sheet'
 import { Badge } from '../ui/badge'
 import AttachmentCard from '../TaskSidebar/AttachmentCard'
 import DescriptionCard from '../TaskSidebar/DescriptionCard'
 import InformationCard from '../TaskSidebar/InformationCard'
-import CommentCard from '../TaskSidebar/CommentCard'
+import CommentCard from '../TaskSidebar/TabsCard'
 
 interface TaskContentProps {
   taskId?: number | string
@@ -57,15 +57,12 @@ export default function taskcontent({ taskId, projectId }: TaskContentProps) {
 
 
   return (
-    <div className='flex p-4 items-start flex-col'>
-        <Button
-        variant="ghost"
-        size="sm"
-        className="gap-2 text-muted-foreground"
-        >
-        <Maximize2 className="h-4 w-4" />
-        Expand
-        </Button>
+    <div className='flex p-4 items-start flex-col '>
+        <div className='flex-row gap-2'>
+          <Button variant="ghost" size="sm" className='text-muted-foreground gap-2'><Maximize2/> Expand</Button>
+          <Button variant="ghost" size="sm" className='text-muted-foreground gap-2'><SquarePen /> Edit</Button>
+
+        </div>
 
         <div className='mt-7 ml-3'>
           {loading && (
@@ -103,7 +100,7 @@ export default function taskcontent({ taskId, projectId }: TaskContentProps) {
                   </div>
               </div>
 
-              <div className='max-w-lg mt-5'>
+              <div className='max-w-lg mt-3'>
                 <CommentCard projectId={projectId} taskId={taskId}/>
               </div>
              

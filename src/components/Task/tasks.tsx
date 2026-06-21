@@ -1,4 +1,4 @@
-import type { Task } from "./columns"
+import type { Task } from "./Columns"
 
 const normalizeStatus = (value: unknown): Task["status"] => {
   const status = String(value ?? "").toUpperCase()
@@ -76,10 +76,26 @@ export const normalizeTasks = (payload: unknown): Task[] => {
       return undefined
     }
 
+    const toText = (value: unknown): string | undefined => {
+      if (typeof value === "string" && value.trim()) {
+        return value.trim()
+      }
+
+      return undefined
+    }
+
+    const description =
+      toText(task.description) ??
+      toText(task.details) ??
+      toText(task.content) ??
+      toText(task.notes) ??
+      toText(task.summary)
+
     return {
       id: String(task.id ?? task._id ?? index),
       taskId: toIdString(taskIdValue) ?? String(index),
       projectId: toIdString(projectIdValue),
+      description,
       name: String(task.name ?? task.title ?? "Untitled Task"),
       project:
         typeof projectValue === "object" && projectValue !== null
@@ -89,6 +105,7 @@ export const normalizeTasks = (payload: unknown): Task[] => {
       priority: normalizePriority(task.priority),
       created_by: normalizeCreatorName(task),
       deadline: String(task.deadline ?? task.dueDate ?? task.date ?? new Date().toISOString()),
+      assignedTo: task.assignedTo,
     }
   })
 }

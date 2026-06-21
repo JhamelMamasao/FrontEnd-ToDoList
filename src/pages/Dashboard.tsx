@@ -9,7 +9,8 @@ import TaskPerformance from "../components/Task/TaskPerformance"
 import { DataTable } from "../components/Task/TasksTable"
 import { useNavigate } from "react-router-dom"
 import { useDashboardData } from "../hooks/dashbords"
-import { columns } from "../components/Task/Columns"
+import { columns } from "../components/Task/columns"
+
 
 export const Dashboard = () => {
   const navigate = useNavigate()

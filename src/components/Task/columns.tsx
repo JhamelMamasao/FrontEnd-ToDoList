@@ -2,12 +2,15 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "../ui/badge";
 import { CircleCheck, Clock, Loader } from "lucide-react";
 import { AvatarFallback, Avatar } from "../ui/avatar";
+import { Button } from "../ui/button"
+import { Edit, Trash2, MoreHorizontal } from "lucide-react"
 
 
 export type Task = {
   id: string
   taskId?: string | number
   projectId?: string | number
+  description?: string
   name: string
   project: string
   status: "In Progress" | "Done" | "Pending" 
@@ -100,6 +103,15 @@ export const columns: ColumnDef<Task>[] = [
       </div>
     );
   },
-}
+},
+{
+  accessorKey: "commands",
+  header: "Commands",
+  cell: ({ row }) => (
+   <div>
+    
+   </div>
+  ),
+},
   
 ]
